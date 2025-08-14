@@ -1,28 +1,27 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class MoveForword : MonoBehaviour
 {
-    public float speed;
-    public float powerupStrength;
-    public float xBounds;
-    public float zBounds;
+    private float speed = 50;
+    private float powerupStrength = 15;
+    private float bounds = 20;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
     void Update()
     {
+        Move();
+    }
+
+
+
+    
+    private void Move()
+    {
         transform.Translate(Vector3.up * Time.deltaTime * speed);
-        if (transform.position.x < -xBounds || transform.position.x > xBounds)
+        if (transform.position.x < -bounds || transform.position.x > bounds)
         {
             Destroy(gameObject);
         }
-        else if (transform.position.z < -xBounds || transform.position.z > xBounds)
+        else if (transform.position.z < -bounds || transform.position.z > bounds)
         {
             Destroy(gameObject);
         }

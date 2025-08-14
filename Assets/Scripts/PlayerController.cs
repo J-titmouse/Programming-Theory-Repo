@@ -2,41 +2,32 @@ using System;
 using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
-    public GameObject jukebox;
+    
     private Rigidbody PlayerRB;
-    public GameObject laserBeam;
-    private GameObject focalPoint;
-    public GameObject powerupIndicatorLaser;
-    private Vector3 powerupIndicatorLaserOffset = new Vector3(-0.38f, 1f, -0.6f);
-    public GameObject powerupIndicatorSlam;
-    private Vector3 powerupIndicatorSlamOffset = new Vector3(0.38f, 1f, -0.6f);
-    public ParticleSystem explosionParticle;
-    public AudioClip laserShot;
-    public float laserShotVolume = 1.0f;
-    public AudioClip butSlam;
-    public float butSlamVolume = 1.0f;
-    public AudioClip powerupCollect;
-    public float powerupCollectVolume = 1.0f;
-    public AudioClip ballCollision;
-    public float ballCollisionVolume = 1.0f;
-    public AudioClip getBiggerSound;
-    public float getBiggerSoundVolume = 1.0f;
     private AudioSource playerAudio;
-    public float gravityModifier;
-    public float speed = 500;
-    public float powerupStrength;
-    public bool hasPowerup = false;
-    public int numberOfLasers;
-    public int nymberOfButSlam;
-    public bool gameOver = false;
+    private Vector3 powerupIndicatorLaserOffset = new Vector3(-0.38f, 1f, -0.6f);
+    private Vector3 powerupIndicatorSlamOffset = new Vector3(0.38f, 1f, -0.6f);
+    private float gravityModifier = 2;
+    private float speed = 500;
+    private float powerupStrength = 20;
+    private bool hasPowerup = false;
     private int basePowerupTimer = 7;
     private int big = 1;
+    private int numberOfLasers;
+    private int nymberOfButSlam;
+
+    [SerializeField] private GameObject jukebox;
+    [SerializeField] private  GameObject laserBeam;
+    [SerializeField] private  GameObject focalPoint;
+    [SerializeField] private  GameObject powerupIndicatorLaser;
+    [SerializeField] private GameObject powerupIndicatorSlam;
+    [SerializeField] private ParticleSystem explosionParticle;
+    [SerializeField] private AudioClip[] audioClips;
+
     
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         PlayerRB = GetComponent<Rigidbody>();
@@ -48,6 +39,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Move();
+    }
+
+    private void Move()
+    { 
         if (transform.position.y < -10)
         {
             jukebox.GetComponent<Jukebox>().EndGameMusic();
@@ -72,23 +68,23 @@ public class PlayerController : MonoBehaviour
             transform.localScale = new Vector3(3, 3, 3);
             powerupIndicatorLaserOffset = powerupIndicatorLaserOffset * 2;
             powerupIndicatorSlamOffset = powerupIndicatorSlamOffset * 2;
-            playerAudio.PlayOneShot(getBiggerSound, getBiggerSoundVolume);
-            
+            playerAudio.PlayOneShot(audioClips[4]);
+
         }
         else if (other.CompareTag("Powerup 1"))
         {
             nymberOfButSlam++;
             powerupIndicatorSlam.gameObject.SetActive(true);
-            playerAudio.PlayOneShot(powerupCollect, powerupCollectVolume);
+            playerAudio.PlayOneShot(audioClips[2]);
         }
         else if (other.CompareTag("Powerup 2"))
         {
             numberOfLasers++;
             powerupIndicatorLaser.gameObject.SetActive(true);
-            playerAudio.PlayOneShot(powerupCollect, powerupCollectVolume);
+            playerAudio.PlayOneShot(audioClips[2]);
         }
-        
-        
+
+
         Destroy(other.gameObject);
     }
 
@@ -121,7 +117,7 @@ public class PlayerController : MonoBehaviour
                     float xPos = (float)Math.Sin(Mathf.Deg2Rad * angle) * 1.75f * big;
                     float zPos = (float)Math.Cos(Mathf.Deg2Rad * angle) * 1.75f * big;
                     Instantiate(laserBeam, transform.position + new Vector3(xPos, 0, zPos), Quaternion.Euler(90, angle, 0));
-                    playerAudio.PlayOneShot(laserShot, laserShotVolume);
+                    playerAudio.PlayOneShot(audioClips[0]);
                     yield return new WaitForSeconds(.1f);
                 }
             }
@@ -150,11 +146,11 @@ public class PlayerController : MonoBehaviour
             Rigidbody enemyRigidBody = collision.gameObject.GetComponent<Rigidbody>();
             Vector3 awayFromPlayer = collision.gameObject.transform.position - transform.position;
             enemyRigidBody.AddForce(awayFromPlayer * powerupStrength, ForceMode.Impulse);
-            playerAudio.PlayOneShot(ballCollision, ballCollisionVolume);
+            playerAudio.PlayOneShot(audioClips[3]);
         }
         else if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Boss"))
         {
-            playerAudio.PlayOneShot(ballCollision, ballCollisionVolume);
+            playerAudio.PlayOneShot(audioClips[3]);
         }
     }
 
@@ -179,7 +175,7 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(.1f);
         transform.position = transform.position - new Vector3(0, 2.4f, 0);
         yield return new WaitForSeconds(.04f);
-        playerAudio.PlayOneShot(butSlam, butSlamVolume);
+        playerAudio.PlayOneShot(audioClips[1]);
         ButSlam();
         explosionParticle.Play();
 

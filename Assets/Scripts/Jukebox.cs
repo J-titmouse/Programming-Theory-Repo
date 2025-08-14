@@ -1,24 +1,38 @@
-using NUnit.Framework.Internal;
 using UnityEngine;
 
 public class Jukebox : MonoBehaviour
 {
     private AudioSource playerAudio;
-    public AudioClip[] track;
-    public int trackNumber = 1;
     public bool switchTracks = true;
     private int lastTrackNum = 0;
+    private int trackNumber = 1;
+    [SerializeField] private AudioClip[] track;
 
-    //public AudioClip getBiggerSound;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         playerAudio = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
     void Update()
+    {
+        NextTrack();
+    }
+
+
+
+    public void BossFight()
+    {
+        ChangeSong(track[0]);
+        lastTrackNum = 0;
+    }
+
+    public void EndGameMusic()
+    {
+        ChangeSong(track[5]);
+        lastTrackNum = 5;
+    }
+    private void NextTrack()
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
@@ -42,18 +56,7 @@ public class Jukebox : MonoBehaviour
             switchTracks = false;
         }
     }
-    public void BossFight()
-    {
-        ChangeSong(track[0]);
-        lastTrackNum = 0;
-    }
 
-    public void EndGameMusic()
-    {
-        ChangeSong(track[5]);
-        lastTrackNum = 5;
-        Debug.Log("here");
-    }
     private void ChangeSong(AudioClip upNext)
     {
         playerAudio.Stop();

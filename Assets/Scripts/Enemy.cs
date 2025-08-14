@@ -1,23 +1,20 @@
-using System;
 using System.Collections;
-using System.Runtime.CompilerServices;
-using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Enemy : MonoBehaviour
 {
-    public float speed = 200;
+    private float speed = 200;
     private int stop = 0;
     private Rigidbody enemyRB;
     private GameObject player;
-    public ParticleSystem celebration;
     private bool firestTime = true;
     private AudioSource playerAudio;
-    public AudioClip fireWorks;
+
+    
+    [SerializeField] private AudioClip fireWorks; 
+    [SerializeField] private ParticleSystem celebration;
 
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         enemyRB = GetComponent<Rigidbody>();
@@ -25,8 +22,16 @@ public class Enemy : MonoBehaviour
         playerAudio = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
+
     void Update()
+    {
+        IsPlayerStillonPlatfrom();
+        IsEnemyStillonPlatform();
+    }
+    
+
+
+    private void IsPlayerStillonPlatfrom()
     {
         if (player != null)
         {
@@ -41,24 +46,18 @@ public class Enemy : MonoBehaviour
             StartCoroutine(JumpAnimationTimer());
             stop++;
         }
+    }
+    private void IsEnemyStillonPlatform()
+    {
         if (transform.position.y < -10)
         {
             Destroy(gameObject);
         }
     }
-    /*
-        IEnumerator JumpAnimationTimer()
-        {
-            yield return new WaitForSeconds(RandomNumGen());
-            transform.position = transform.position + new Vector3(0, 2.5f, 0);
-            celebration.Play();
-            yield return new WaitForSeconds(1);
-            stop--;
-        }
-     */
+
     private float RandomNumGen()
     {
-        float ranNub = UnityEngine.Random.Range(0, .5f);
+        float ranNub = Random.Range(0, .5f);
         return ranNub;
 
     }

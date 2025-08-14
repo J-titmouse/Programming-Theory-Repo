@@ -1,28 +1,28 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Collections;
-using UnityEngine;
 using NUnit.Framework.Internal;
+using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    //public GameObject enemeyPrefab;
-    
-    public GameObject[] enemys;
-    public GameObject[] powerupPrefab;
     private float spawnRange = 9.0f;
-    public int enamyCount;
-    public int waveNumber = 1;
-    public GameObject player;
-    public GameObject jukebox;
-    public int numOfMins = 0;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
+    private int enamyCount;
+    private int waveNumber = 1;
+    private int numOfMins = 0;
 
+    [SerializeField] private GameObject[] enemys;
+    [SerializeField] private GameObject[] powerupPrefab;
+    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject jukebox;
+
+
+    void Update()
+    {
+        ISThereEnemysLeft();
     }
 
-    // Update is called once per frame
-    void Update()
+
+
+    private void ISThereEnemysLeft()
     {
         enamyCount = FindObjectsByType<Enemy>(FindObjectsSortMode.None).Length;
         if (enamyCount == 0 && player != null)

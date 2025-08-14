@@ -810,6 +810,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jukebox: {fileID: 1681504152}
   laserBeam: {fileID: 2587086591725148881, guid: a217886f252960a45ad582414cc214f2, type: 3}
+  focalPoint: {fileID: 0}
   powerupIndicatorLaser: {fileID: 1192984016650529}
   powerupIndicatorSlam: {fileID: 1185290664}
   explosionParticle: {fileID: 1123832624}
@@ -823,12 +824,12 @@ MonoBehaviour:
   ballCollisionVolume: 1
   getBiggerSound: {fileID: 8300000, guid: 722b11eb2cd05cc488187f7bdc54f7a9, type: 3}
   getBiggerSoundVolume: 1
-  gravityModifier: 2
-  speed: 500
-  powerupStrength: 20
-  hasPowerup: 0
-  numberOfLasers: 0
-  nymberOfButSlam: 0
+  audioClips:
+  - {fileID: 8300000, guid: 180cbab8ba0177a47a5f8b60bf71d3c7, type: 3}
+  - {fileID: 8300000, guid: a0355d0ec8456b942b2cf1418672af57, type: 3}
+  - {fileID: 8300000, guid: 1393a61d97fb7fc40aa6941258e738e5, type: 3}
+  - {fileID: 8300000, guid: aa8fb58edbfe7e942bb20bf071e51fd4, type: 3}
+  - {fileID: 8300000, guid: 722b11eb2cd05cc488187f7bdc54f7a9, type: 3}
   gameOver: 0
 --- !u!82 &1274925284
 AudioSource:
@@ -1069,11 +1070,8 @@ MonoBehaviour:
   - {fileID: 5453612580595155755, guid: 1f092cc11223a42498df4fce32a8fc88, type: 3}
   - {fileID: 7830915878437047055, guid: de579432cfd7c5d47a1fd154c55cbe84, type: 3}
   - {fileID: 3793389753149227647, guid: aa981e6a50540364caa8347c64074c02, type: 3}
-  enamyCount: 0
-  waveNumber: 1
   player: {fileID: 1274925277}
   jukebox: {fileID: 1681504152}
-  numOfMins: 0
 --- !u!4 &1491575140
 Transform:
   m_ObjectHideFlags: 0
@@ -1119,6 +1117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6621987185eeb9429cb3c959b2d8c4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  switchTracks: 1
   track:
   - {fileID: 8300000, guid: 84ec1ff35640d80499d595535da2990b, type: 3}
   - {fileID: 8300000, guid: b0a6874d0ca34d3489c954469135bfef, type: 3}
@@ -1127,8 +1126,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 53e4680e8276aeb49845f8aaf9f5046b, type: 3}
   - {fileID: 8300000, guid: 889743d2c8e2eb940bb0ab9c3302e631, type: 3}
   - {fileID: 8300000, guid: fbedbac6161b69d4b95a73561ff1b394, type: 3}
-  trackNumber: 1
-  switchTracks: 1
 --- !u!82 &1681504154
 AudioSource:
   m_ObjectHideFlags: 0
