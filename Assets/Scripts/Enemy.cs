@@ -3,19 +3,20 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    private float speed = 200;
-    private int stop = 0;
-    private Rigidbody enemyRB;
-    private GameObject player;
-    private bool firestTime = true;
-    private AudioSource playerAudio;
+    protected float speed = 200;
+    protected int stop = 0;
+    protected Rigidbody enemyRB;
+    protected GameObject player;
+    protected GameObject spawnManager;
+    protected AudioSource playerAudio;
+    protected bool firestTime = true;
 
     
-    [SerializeField] private AudioClip fireWorks; 
-    [SerializeField] private ParticleSystem celebration;
+    [SerializeField] protected AudioClip fireWorks; 
+    [SerializeField] protected ParticleSystem celebration;
 
 
-    void Start()
+    virtual protected void Start()
     {
         enemyRB = GetComponent<Rigidbody>();
         player = GameObject.Find("Player");
@@ -23,15 +24,15 @@ public class Enemy : MonoBehaviour
     }
 
 
-    void Update()
+    virtual protected void Update()
     {
-        IsPlayerStillonPlatfrom();
+        IsPlayerStillOnPlatfrom();
         IsEnemyStillonPlatform();
     }
     
 
 
-    private void IsPlayerStillonPlatfrom()
+    protected void IsPlayerStillOnPlatfrom()
     {
         if (player != null)
         {
@@ -47,7 +48,7 @@ public class Enemy : MonoBehaviour
             stop++;
         }
     }
-    private void IsEnemyStillonPlatform()
+    virtual protected void IsEnemyStillonPlatform()
     {
         if (transform.position.y < -10)
         {
@@ -55,7 +56,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private float RandomNumGen()
+    protected float RandomNumGen()
     {
         float ranNub = Random.Range(0, .5f);
         return ranNub;

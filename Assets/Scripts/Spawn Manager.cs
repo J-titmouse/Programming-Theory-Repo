@@ -12,15 +12,12 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject[] enemys;
     [SerializeField] private GameObject[] powerupPrefab;
     [SerializeField] private GameObject player;
-    [SerializeField] private GameObject jukebox;
 
 
     void Update()
     {
         ISThereEnemysLeft();
     }
-
-
 
     private void ISThereEnemysLeft()
     {
@@ -47,8 +44,7 @@ public class SpawnManager : MonoBehaviour
         if (enemyToSpaw % 5 == 0)
         {
             Instantiate(enemys[0], GenerateSpawnPosition(), enemys[0].transform.rotation);
-            StartCoroutine(BossFight());
-            jukebox.GetComponent<Jukebox>().BossFight();
+            
         }
         else
         {
@@ -58,26 +54,16 @@ public class SpawnManager : MonoBehaviour
                 enemyNUm = Random.Range(2, 5);
                 Instantiate(enemys[enemyNUm], GenerateSpawnPosition(), enemys[enemyNUm].transform.rotation);
             }
-            jukebox.GetComponent<Jukebox>().switchTracks = true;
         }
 
     }
-    private void SpawnPowerup()
+    public void SpawnPowerup()
     {
         int powerupenemyNUm = Random.Range(0, 3);
         Instantiate(powerupPrefab[powerupenemyNUm], GenerateSpawnPosition(), powerupPrefab[powerupenemyNUm].transform.rotation);
     }
 
-    IEnumerator BossFight()
-    {
-        while (GameObject.FindGameObjectsWithTag("Boss").Length > 0 && player != null)
-        {
-            SpawnPowerup();
-            SpawnMins();
-            yield return new WaitForSeconds(5);
-        }
-    }
-    private void SpawnMins()
+    public void SpawnMins()
     {
         for (int i = 0; i <= numOfMins; i++)
         {
