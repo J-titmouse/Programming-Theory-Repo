@@ -37,7 +37,7 @@ public class MainUIHandler : MonoBehaviour
     public void IncrementRound()
     {
         round++;
-        UI_Round.text = $"{round}";
+        UI_Round.text = $"Wave : {round}";
     }
     public void UpdateTopScore()
     {
