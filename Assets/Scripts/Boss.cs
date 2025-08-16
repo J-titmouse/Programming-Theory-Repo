@@ -25,8 +25,9 @@ public class Boss : Enemy
     {
         if (transform.position.y < -10)
         {
-            Destroy(gameObject);
+            DataManagement.Instance.AddToScore(100);
             jukebox.GetComponent<Jukebox>().switchTracks = true;
+            Destroy(gameObject);
         }
     }
     IEnumerator BossFight()

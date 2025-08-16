@@ -27,9 +27,18 @@ public class Minion : Enemy
     {
         if (Boss == null && !done)
         {
-            done = true;
-            
             StartCoroutine(RemoveMin());
+            done = true;
+            DataManagement.Instance.AddToScore(5);
+        }
+        
+    }
+    override protected void IsEnemyStillonPlatform()
+    {
+        if (transform.position.y < -10)
+        { 
+            DataManagement.Instance.AddToScore(10);
+            Destroy(gameObject);
         }
     }
     IEnumerator RemoveMin()

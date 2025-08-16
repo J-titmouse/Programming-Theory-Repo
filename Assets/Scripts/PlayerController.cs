@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    
     private Rigidbody PlayerRB;
     private AudioSource playerAudio;
     private Vector3 powerupIndicatorLaserOffset = new Vector3(-0.38f, 1f, -0.6f);
@@ -26,6 +25,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject powerupIndicatorSlam;
     [SerializeField] private ParticleSystem explosionParticle;
     [SerializeField] private AudioClip[] audioClips;
+    [SerializeField] private GameObject MainUIHandler;
 
     
     void Start()
@@ -47,6 +47,8 @@ public class PlayerController : MonoBehaviour
         if (transform.position.y < -10)
         {
             jukebox.GetComponent<Jukebox>().EndGameMusic();
+            MainUIHandler.GetComponent<MainUIHandler>().GameOver();
+            DataManagement.Instance.newentry();
             Destroy(gameObject);
         }
 
@@ -152,6 +154,7 @@ public class PlayerController : MonoBehaviour
         {
             playerAudio.PlayOneShot(audioClips[3]);
         }
+        DataManagement.Instance.AddToScore(1);
     }
 
     private float Pathageria(float B, float C)

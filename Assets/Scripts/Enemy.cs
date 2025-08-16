@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour
     
     [SerializeField] protected AudioClip fireWorks; 
     [SerializeField] protected ParticleSystem celebration;
+    
 
 
     virtual protected void Start()
@@ -52,6 +53,7 @@ public class Enemy : MonoBehaviour
     {
         if (transform.position.y < -10)
         {
+            DataManagement.Instance.AddToScore(50);
             Destroy(gameObject);
         }
     }

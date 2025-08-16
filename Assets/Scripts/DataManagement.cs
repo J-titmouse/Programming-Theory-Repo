@@ -8,7 +8,7 @@ public class DataManagement : MonoBehaviour
     private int[] topScores = new int[5];
     private string[] topScoresName = {"Player", "Player", "Player", "Player", "Player",};
     private string playerName = "";
-    private int Scores;
+    private int score;
     private void Awake()
     {
         if (Instance != null)
@@ -30,6 +30,12 @@ public class DataManagement : MonoBehaviour
             playerName = value;
         }
     }
+    public int ScoreGettersetter
+    {
+        get { return score; }
+        set { score = value;  }
+        
+    }
 
     public string scoresboardNames
     {
@@ -43,6 +49,10 @@ public class DataManagement : MonoBehaviour
             return tempText;
         }
     }
+    public string TopScoresName()
+    {
+        return topScoresName[0];
+    }
     public string scoresboardScores
     {
         get
@@ -55,17 +65,19 @@ public class DataManagement : MonoBehaviour
             return tempText;
         }
     }
-
-    public void AddToScore()
+    public int TopScores()
     {
-        Scores++;
+        return topScores[0];
     }
 
     public void newentry()
     {
-        NewEntry(Scores, playerName);
+        NewEntry(score, playerName);
     }
-
+    public void AddToScore(int toAdd)
+    {
+        score += toAdd;
+    }
     private void NewEntry(int playerScore, string name)
     {
         bool once = false;

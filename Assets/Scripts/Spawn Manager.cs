@@ -12,6 +12,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject[] enemys;
     [SerializeField] private GameObject[] powerupPrefab;
     [SerializeField] private GameObject player;
+    [SerializeField] private GameObject MainUIHandler;
 
 
     void Update()
@@ -24,6 +25,7 @@ public class SpawnManager : MonoBehaviour
         enamyCount = FindObjectsByType<Enemy>(FindObjectsSortMode.None).Length;
         if (enamyCount == 0 && player != null)
         {
+            MainUIHandler.GetComponent<MainUIHandler>().IncrementRound();
             SpawnEnemyWave(waveNumber);
             waveNumber++;
         }
